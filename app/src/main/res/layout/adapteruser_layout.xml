@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/rl_layout"
+    >
+
+
+    <ImageView
+        android:id="@+id/iv_profile"
+        android:layout_width="@dimen/_70ssp"
+        android:layout_height="@dimen/_70ssp"
+        android:layout_marginRight="@dimen/_6ssp"
+        android:contentDescription="profile"
+        android:src="@drawable/ic_person"
+
+        />
+
+    <TextView
+        android:id="@+id/tv_firstname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10ssp"
+        android:layout_toRightOf="@+id/iv_profile"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:text="sha"
+        android:textSize="@dimen/_12ssp" />
+
+    <TextView
+        android:id="@+id/tv_lastname"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_firstname"
+        android:layout_margin="@dimen/_10ssp"
+        android:layout_toRightOf="@+id/iv_profile"
+        android:ellipsize="marquee"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textSize="@dimen/_12ssp"
+
+        />
+
+</RelativeLayout>
