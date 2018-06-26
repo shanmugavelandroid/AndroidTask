@@ -15,6 +15,7 @@ import shanmugaveltask_project.com.sampletask.database.Userdatabase;
 import shanmugaveltask_project.com.sampletask.model.response.UserDetails;
 import shanmugaveltask_project.com.sampletask.model.response.UserMaster;
 import shanmugaveltask_project.com.sampletask.utils.SharedPrefsUtils;
+import shanmugaveltask_project.com.sampletask.utils.ToastUtil;
 import shanmugaveltask_project.com.sampletask.view.activity.MainActivity;
 
 public class UserPresenterImpl implements UserPresenter {
@@ -121,6 +122,11 @@ public class UserPresenterImpl implements UserPresenter {
             userView.hideprogressDialog();
             userView.OnSuccess(user, SharedPrefsUtils.getInt("totalvalue",0,context));
             offset=offset+limit;
+
+            if(user.size()==0)
+            {
+                ToastUtil.showToast(context,"Please  check your internet");
+            }
         }
     }
 
