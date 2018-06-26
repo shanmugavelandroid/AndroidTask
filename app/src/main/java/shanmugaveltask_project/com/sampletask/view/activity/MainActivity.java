@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
@@ -27,6 +26,7 @@ import shanmugaveltask_project.com.sampletask.presenter.userpresenter.UserPresen
 import shanmugaveltask_project.com.sampletask.presenter.userpresenter.UserPresenterImpl;
 import shanmugaveltask_project.com.sampletask.presenter.userpresenter.UserView;
 import shanmugaveltask_project.com.sampletask.utils.Networkavailable;
+import shanmugaveltask_project.com.sampletask.utils.SharedPrefsUtils;
 import shanmugaveltask_project.com.sampletask.utils.ToastUtil;
 import shanmugaveltask_project.com.sampletask.view.adapter.UserListAdapter;
 
@@ -59,7 +59,7 @@ public class MainActivity extends BaseActivity implements UserView {
 
 
     // first time page call 1
-    int currentPage = 1, total_pages, per_page_data, totaldata;
+    int currentPage = 1, total_pages, per_page_data;
 
     // api loading or not
     private boolean isloading = true;
@@ -68,6 +68,8 @@ public class MainActivity extends BaseActivity implements UserView {
     private CompositeDisposable disposable = new CompositeDisposable();
 
 
+   public SharedPrefsUtils sharedPrefsUtils;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,9 +77,10 @@ public class MainActivity extends BaseActivity implements UserView {
         ButterKnife.bind(this);
         initProgressDialog(this);
         initdatabase(this);
+        sharedPrefsUtils.getSharedPrefs(this);
 
         apiService = ApiClient.getClient(getApplicationContext()).create(ApiService.class);
-        presenter = new UserPresenterImpl(this, userdatabase);
+        presenter = new UserPresenterImpl(this, userdatabase,this);
 
         setDataAdatper(userData);
 
@@ -97,7 +100,7 @@ public class MainActivity extends BaseActivity implements UserView {
 
                 if (lastvisibleitemposition == userListAdapter.getItemCount() - 1) {
 
-                    if (!isloading && userListAdapter.getItemCount() != totaldata) {
+                    if (!isloading && userListAdapter.getItemCount() != sharedPrefsUtils.getInt("totalvalue",0,MainActivity.this)) {
                         currentPage++;
                         apiCalling(currentPage);
                         isloading = true;
@@ -105,8 +108,7 @@ public class MainActivity extends BaseActivity implements UserView {
 
 
                 }
-
-            }
+                }
 
 
         });
@@ -177,9 +179,11 @@ public class MainActivity extends BaseActivity implements UserView {
             // updateListdata method used add date old and new
             userListAdapter.updateListdata(userData);
 
-            totaldata = totaldata1;
+            //totaldata = totaldata1;
 
-            Log.d("totaldata", "" + totaldata);
+            sharedPrefsUtils.putInt("totalvalue",totaldata1,this);
+
+            //Log.d("totaldata", "" + totaldata);
             isloading = false;
 
 

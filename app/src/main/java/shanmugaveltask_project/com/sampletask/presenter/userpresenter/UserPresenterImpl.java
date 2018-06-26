@@ -1,5 +1,6 @@
 package shanmugaveltask_project.com.sampletask.presenter.userpresenter;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 import java.util.ArrayList;
@@ -13,6 +14,8 @@ import shanmugaveltask_project.com.sampletask.data.ApiService;
 import shanmugaveltask_project.com.sampletask.database.Userdatabase;
 import shanmugaveltask_project.com.sampletask.model.response.UserDetails;
 import shanmugaveltask_project.com.sampletask.model.response.UserMaster;
+import shanmugaveltask_project.com.sampletask.utils.SharedPrefsUtils;
+import shanmugaveltask_project.com.sampletask.view.activity.MainActivity;
 
 public class UserPresenterImpl implements UserPresenter {
 
@@ -22,9 +25,13 @@ public class UserPresenterImpl implements UserPresenter {
 
     public List<UserDetails> userData = new ArrayList<>();
 
-    public UserPresenterImpl(UserView mainActivity, Userdatabase  userdatabase) {
+    public Context context;
+
+    int limit=3,offset=0;
+    public UserPresenterImpl(UserView mainActivity, Userdatabase userdatabase, MainActivity activity) {
         this.userView = mainActivity;
         this.userdatabase=userdatabase;
+        this.context=activity;
     }
 
 
@@ -105,14 +112,15 @@ public class UserPresenterImpl implements UserPresenter {
         protected List<UserDetails> doInBackground(String... strings) {
 
 
-            return userdatabase.daoAccess().fetchalluserdetails();
+            return userdatabase.daoAccess().fetchalluserdetails(limit,offset);
         }
 
         @Override
         protected void onPostExecute(List<UserDetails> user) {
             super.onPostExecute(user);
             userView.hideprogressDialog();
-            userView.OnSuccess(user,user.size());
+            userView.OnSuccess(user, SharedPrefsUtils.getInt("totalvalue",0,context));
+            offset=offset+limit;
         }
     }
 

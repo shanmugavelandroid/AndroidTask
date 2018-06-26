@@ -15,6 +15,7 @@ import shanmugaveltask_project.com.sampletask.model.response.UserDetails;
 import shanmugaveltask_project.com.sampletask.presenter.userpresenter.UserPresenter;
 import shanmugaveltask_project.com.sampletask.presenter.userpresenter.UserPresenterImpl;
 import shanmugaveltask_project.com.sampletask.presenter.userpresenter.UserView;
+import shanmugaveltask_project.com.sampletask.view.activity.MainActivity;
 
 import static org.mockito.Mockito.verify;
 
@@ -32,6 +33,9 @@ public class UserPresenterImplTest {
     @Mock
     public UserPresenter userPresenter;
 
+    @Mock
+    public MainActivity mainActivity;
+
     private CompositeDisposable disposable = new CompositeDisposable();
 
     public int Pageno=1 ,totalcount=0;
@@ -40,6 +44,7 @@ public class UserPresenterImplTest {
     public List<UserDetails> userData = new ArrayList<>();
 
     Throwable throwable;
+
 
     @Before
     public void setUp() throws Exception {
@@ -50,7 +55,7 @@ public class UserPresenterImplTest {
                 __ -> Schedulers.trampoline());*/
       /*  RxAndroidPlugins.setInitMainThreadSchedulerHandler(__ -> Schedulers.io());*/
 
-        userPresenter= new UserPresenterImpl(userView,userdatabase);
+        userPresenter= new UserPresenterImpl(userView,userdatabase, mainActivity);
     }
 
 
