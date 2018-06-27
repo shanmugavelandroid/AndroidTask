@@ -3,6 +3,7 @@ package shanmugaveltask_project.com.sampletask;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
@@ -55,7 +56,9 @@ public class UserPresenterImplTest {
                 __ -> Schedulers.trampoline());*/
       /*  RxAndroidPlugins.setInitMainThreadSchedulerHandler(__ -> Schedulers.io());*/
 
-        userPresenter= new UserPresenterImpl(userView,userdatabase, mainActivity);
+       // userPresenter= new UserPresenterImpl(userView,userdatabase, mainActivity);
+
+        userPresenter = Mockito.spy(new UserPresenterImpl(userView, userdatabase,mainActivity));
     }
 
 
@@ -71,9 +74,8 @@ public class UserPresenterImplTest {
     @Test
     public void  onFailureTest() {
 
-        userPresenter.getUserdata(apiService,5,isnetworkavialable,disposable);
+        userPresenter.getUserdata(apiService,0,isnetworkavialable,disposable);
         verify(userView).onFailure(throwable);
     }
 }
-
 

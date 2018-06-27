@@ -9,11 +9,12 @@
 
     <ImageView
         android:id="@+id/iv_profile"
-        android:layout_width="@dimen/_70ssp"
-        android:layout_height="@dimen/_70ssp"
+        android:layout_width="@dimen/_100ssp"
+        android:layout_height="@dimen/_100ssp"
         android:layout_marginRight="@dimen/_6ssp"
         android:contentDescription="profile"
         android:src="@drawable/ic_person"
+
 
         />
 
@@ -36,7 +37,6 @@
         android:layout_margin="@dimen/_10ssp"
         android:layout_toRightOf="@+id/iv_profile"
         android:ellipsize="marquee"
-        android:gravity="center"
         android:singleLine="true"
         android:textSize="@dimen/_12ssp"
 
